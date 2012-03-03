@@ -68,6 +68,17 @@ class Fuel_validate extends Fuel_advanced_module {
 		$this->set_params($this->_config);
 		
 	}
+
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Will run the W3C HTML validation.
+	 *
+	 * @access	public
+	 * @param	string	The URI path to the local page you want to validate
+	 * @param	boolean	Determines whether it will return just the status or if it will return the full report. Default is FALSE (optional)
+	 * @return	void
+	 */	
 	function html($uri, $just_status = FALSE)
 	{
 		// if valid_internal_domains config match then read the file and post to validator
@@ -215,7 +226,16 @@ class Fuel_validate extends Fuel_advanced_module {
 		return $results;
 	}
 	
+	// --------------------------------------------------------------------
 	
+	/**
+	 * Will validate the links on a page
+	 *
+	 * @access	public
+	 * @param	string	The URI path to the local page you want to validate
+	 * @param	boolean	Determines whether it will return just the invalid links or all of them. Default is FALSE, meaning it will just return invalid links (optional)
+	 * @return	void
+	 */	
 	function links($url, $just_invalid = FALSE)
 	{
 		// use this method which is faster
@@ -246,43 +266,7 @@ class Fuel_validate extends Fuel_advanced_module {
 		
 		// now loop through the links and check if they are valid
 		$results = ($just_invalid) ? array() :  array('valid' => array(), 'invalid' => array());
-		//$this->CI->benchmark->mark('code_start1');
-		/*
-		foreach($formatted_links as $link)
-		{
-			$this->CI->curl->add_session($link, 'none');
-			$this->CI->curl->exec_single();
-			
-			// since TRUE is passed, it will return the full array of session info with the http_code
-			$code = $this->CI->curl->info('http_code', 0);
-			$is_valid = ($code < 400);
-			if ($just_invalid)
-			{
-				// capture just invalid links
-				if (!$is_valid)
-				{
-					$results[] = $link;
-				}
-			}
-			else
-			{
-				if ($is_valid)
-				{
-					$results['valid'][] = $link;
-				}
-				else
-				{
-					$results['invalid'][] = $link;
-				}
-			}
-			
-		}*/
-		// $this->CI->benchmark->mark('code_end1');
-		// echo "<pre style=\"text-align: left;\">";
-		// print_r($this->CI->benchmark->elapsed_time('code_start1', 'code_end1'));
-		// echo "</pre>";
-		
-		//$this->CI->benchmark->mark('code_start2');
+
 		foreach($formatted_links as $link)
 		{
 			$this->CI->curl->add_session($link, 'none');
@@ -321,18 +305,20 @@ class Fuel_validate extends Fuel_advanced_module {
 			}
 			
 		}
-		
-		// $this->CI->benchmark->mark('code_end2');
-		// echo "<pre style=\"text-align: left;\">";
-		// print_r($this->CI->benchmark->elapsed_time('code_start2', 'code_end2'));
-		// echo "</pre>";
-		// exit();
-		
 		$results['total'] = count($results['invalid']) + count($results['valid']);
 		return $results;
 		
 	}
 	
+	// --------------------------------------------------------------------
+	
+	/**
+	 * Will return an estimated download size of the page including external assets like images, js and CSS files
+	 *
+	 * @access	public
+	 * @param	string	The URI path to the local page you want to validate
+	 * @return	void
+	 */	
 	function size_report($url)
 	{
 		$this->CI->load->helper('number');
@@ -422,68 +408,9 @@ class Fuel_validate extends Fuel_advanced_module {
 		$filesize_range = array('warn' => array(), 'ok' => array());
 		$total_kb = 0;
 		
-		// using normal curl here so that we can use the same $ch object for multiple requests
-		$this->CI->benchmark->mark('code_start1');
 		/*
-		SLOWER TO USE MUTLI fFOR SOME REASON
+		SLOWER TO USE MUTLI FOR SOME REASON
 		*/
-		// $opts = array(
-		// 	//CURLOPT_FRESH_CONNECT => TRUE,
-		// 	//CURLOPT_FORBID_REUSE => TRUE,
-		// //	CURLOPT_DNS_CACHE_TIMEOUT => 3600,
-		// 	CURLOPT_HEADER => FALSE,
-		// 	CURLOPT_NOBODY => TRUE,
-		// 	);
-		// foreach($resources as $link)
-		// {
-		// 	$this->CI->curl->add_session($link, 'none');
-		// }
-		// 
-		// // will execute a multi
-		// $this->CI->curl->exec();
-		// 
-		// // since TRUE is passed, it will return the full array of session info with the http_code
-		// $infos = $this->CI->curl->info(NULL, TRUE);
-		// // echo "<pre style=\"text-align: left;\">";
-		// // print_r($infos);
-		// // echo "</pre>";
-		// 
-		// foreach($infos as $info)
-		// {
-		// 	$link = $info['url'];
-		// 	if ($info['http_code'] >= 400)
-		// 	{
-		// 		$invalid[] = $link;
-		// 		$output_arr[$link] = 'Invalid';
-		// 	}
-		// 	else
-		// 	{
-		// 		$valid[] = $link;
-		// 		$output_arr[$link] = $info['download_content_length'];
-		// 		
-		// 		// set filesize range
-		// 		$kb = $output_arr[$link]/1000;
-		// 		$total_kb += $output_arr[$link];
-		// 		switch($kb)
-		// 		{
-		// 			case ($kb < 0):
-		// 				$filesize_range['error'][$link] = $output_arr[$link];
-		// 				break;
-		// 			case ($kb >= $config_limit):
-		// 				$filesize_range['warn'][$link] = $output_arr[$link];
-		// 				break;
-		// 			default:
-		// 				$filesize_range['ok'][$link] = $output_arr[$link];
-		// 		}
-		// 	}
-		// 	
-		// }
-		// $this->CI->benchmark->mark('code_end1');
-		// echo "<pre style=\"text-align: left;\">";
-		// print_r($this->CI->benchmark->elapsed_time('code_start1', 'code_end1'));
-		// echo "</pre>";
-		// 		
-		$this->CI->benchmark->mark('code_start2');
 		$ch = curl_init();
 		foreach($resources as $link)
 		{
@@ -497,12 +424,7 @@ class Fuel_validate extends Fuel_advanced_module {
 			$ret = $this->CI->curl->exec_single(); // faster then using a multi-request for some reason
 			
 			
-//			$ret = curl_exec($ch);
 			$info = $this->CI->curl->info();
-			// echo "<pre style=\"text-align: left;\">";
-			// print_r($this->CI->curl->info());
-			// echo "</pre>";
-			
 			if ($info['http_code'] >= 400)
 			{
 				$invalid[] = $link;
@@ -530,16 +452,7 @@ class Fuel_validate extends Fuel_advanced_module {
 			}
 			
 		}
-		// echo "<pre style=\"text-align: left;\">";
-		// print_r($_info);
-		// echo "</pre>";
 
-		$this->CI->benchmark->mark('code_end2');
-		// echo "<pre style=\"text-align: left;\">";
-		// print_r($this->CI->benchmark->elapsed_time('code_start2', 'code_end2'));
-		// echo "</pre>";
-		// exit();
-		
 		$results['invalid'] = $invalid;
 		$results['valid'] = $valid;
 		$results['total'] = count($resources);
@@ -553,5 +466,5 @@ class Fuel_validate extends Fuel_advanced_module {
 
 }
 
-/* End of file Fuel_page_analysis.php */
-/* Location: ./modules/fuel/libraries/Fuel_page_analysis.php */
+/* End of file Fuel_validate.php */
+/* Location: ./modules/fuel/libraries/Fuel_validate.php */
