@@ -14,6 +14,7 @@ $config['nav']['tools']['tools/validate'] = lang('module_validate');
 */
 $config['validate'] = array();
 
+// the inline editing toolbar for doing validation for HTML, links and page weight
 $config['validate']['toolbar'] = array(
 									'toolbar/html' => 'Validate HTML',
 									'toolbar/links' => 'Validate Links',
