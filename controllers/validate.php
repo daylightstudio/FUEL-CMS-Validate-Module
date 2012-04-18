@@ -89,7 +89,7 @@ class Validate extends Fuel_base_controller {
 		// check if the cache folder is writable in case we need to use it to create the HTML file for validation
 		if (!is_writable($this->config->item('cache_path')))
 		{
-			$vars['error'] = lang('error_cache_folder_not_writable', $this->config->item('cache_path'));
+			$vars['error'] = lang('error_folder_not_writable', $this->config->item('cache_path'));
 		}
 		
 		// set the javascript jqx method
