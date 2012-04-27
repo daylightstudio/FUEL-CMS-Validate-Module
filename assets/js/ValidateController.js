@@ -1,9 +1,3 @@
-jqx.load('plugin', 'jquery-ui-1.8.4.custom.min');
-jqx.load('plugin', 'jquery.disable.text.select.pack');
-jqx.load('plugin', 'jquery.selso');
-jqx.load('plugin', 'jquery.fillin');
-jqx.load('plugin', 'jquery.supercomboselect');
-
 ValidateController = jqx.createController(fuel.controller.BaseFuelController, {
 	
 	init : function(initObj){
@@ -14,7 +8,6 @@ ValidateController = jqx.createController(fuel.controller.BaseFuelController, {
 	
 	validate : function(){
 		this.notifications();
-		$('.fillin').fillin(this.localized.validate_pages_input);
 		var _this = this;
 		$('#submit_html').click(function(){
 			$('.csadd').click();
@@ -33,8 +26,6 @@ ValidateController = jqx.createController(fuel.controller.BaseFuelController, {
 			$('#form').attr('action', _this.modulePath + '/validate/size_report').submit();
 			return false;
 		})
-		var comboOpts = this._comboOps('#pages');
-		$('#pages').supercomboselect(comboOpts);
 	},
 	
 	html : function(){
