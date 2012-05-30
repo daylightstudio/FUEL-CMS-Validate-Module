@@ -42,7 +42,7 @@ class Validate extends Fuel_base_controller {
 		
 		$fields['pages_input'] = array('type' => 'textarea', 'value' => $this->fuel->validate->config('default_page_input'), 'class' => 'no_editor', 'cols' => 5, 'rows' => 100, 'placeholder' => lang('validate_pages_input'));
 		$this->load->library('form_builder');
-		$this->form_builder->load_custom_fields(FUEL_PATH.'config/custom_fields.php');
+		$this->form_builder->load_custom_fields(APPPATH.'config/custom_fields.php');
 		$this->form_builder->question_keys = array();
 		$this->form_builder->submit_value = null;
 		$this->form_builder->use_form_tag = FALSE;
