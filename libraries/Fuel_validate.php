@@ -372,7 +372,7 @@ class Fuel_validate extends Fuel_advanced_module {
 		// now look through all css get background urls
 		foreach($css_resources as $href)
 		{
-			$css_contents = file_get_contents($href);
+			$css_contents = @file_get_contents($href);
 			
 			$file_base = explode('/', $href);
 			array_pop($file_base);
