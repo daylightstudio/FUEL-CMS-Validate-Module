@@ -69,7 +69,7 @@ class Validate extends Fuel_base_controller {
 		{
 			
 			$uri = $this->input->post('uri');
-			$page_data = $this->pages_model->find_by_location($uri, FALSE);
+			$page_data = $this->fuel_pages_model->find_by_location($uri, FALSE);
 			
 			$vars = $this->fuel->validate->html($uri);
 			$vars['link'] = $uri;
@@ -119,7 +119,7 @@ class Validate extends Fuel_base_controller {
 		if ($this->input->post('uri'))
 		{
 			$uri = $this->input->post('uri');
-			$page_data = $this->pages_model->find_by_location($uri, FALSE);
+			$page_data = $this->fuel_pages_model->find_by_location($uri, FALSE);
 
 			$vars = $this->fuel->validate->links($uri);
 			$vars['link'] = $uri;
@@ -164,7 +164,7 @@ class Validate extends Fuel_base_controller {
 		if ($this->input->post('uri'))
 		{
 			$uri = $this->input->post('uri');
-			$page_data = $this->pages_model->find_by_location($uri, FALSE);
+			$page_data = $this->fuel_pages_model->find_by_location($uri, FALSE);
 			
 			$vars = $this->fuel->validate->size_report($uri);
 			$vars['edit_url'] = (!empty($page_data['id'])) ? fuel_url('pages/edit/'.$page_data['id']) : '';
