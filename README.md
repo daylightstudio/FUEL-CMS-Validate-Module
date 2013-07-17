@@ -1,5 +1,5 @@
 # VALIDATE MODULE FOR FUEL CMS
-This is a [FUEL CMS](http://www.getfuelcms.com) validate module for adding validate like functionality including posts, categories, and commenting.
+This is a [FUEL CMS](http://www.getfuelcms.com) validate module that provides a way for you to validate your HTML code, page links and page weight.
 
 ## INSTALLATION
 There are a couple ways to install the module. If you are using GIT you can use the following method
