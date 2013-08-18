@@ -31,7 +31,7 @@ class Validate extends Fuel_base_controller {
 		$this->js_controller_params['method'] = 'validate';
 		$this->js_controller_params['module'] = 'tools';
 		
-		$this->load->module_model(FUEL_FOLDER, 'pages_model');
+		$this->load->module_model(FUEL_FOLDER, 'fuel_pages_model');
 	}
 	
 	function index()
