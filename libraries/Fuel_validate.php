@@ -349,7 +349,11 @@ class Fuel_validate extends Fuel_advanced_module {
 			foreach($val as $r)
 			{
 				$href = $r->getAttribute($ext_resources_xpath_attr[$i]);
-				if (substr($href, 0, 1) == '/')
+				if (substr($href, 0, 2) == '//')
+				{
+					$href = "http:".$href;	
+				}
+				else if (substr($href, 0, 1) == '/')
 				{
 					$href = "http://".$_SERVER['HTTP_HOST'].$href;
 				}
@@ -369,6 +373,7 @@ class Fuel_validate extends Fuel_advanced_module {
 			$i++;
 		}
 		
+
 		// now look through all css get background urls
 		foreach($css_resources as $href)
 		{
@@ -382,6 +387,7 @@ class Fuel_validate extends Fuel_advanced_module {
 			{
 				foreach($matches[1] as $match)
 				{
+					$match = str_replace(array('\'', '"'), '', $match);
 					if (substr($match, 0, 4) != 'http')
 					{
 						$resources[] = $file_base.$match;
@@ -412,6 +418,7 @@ class Fuel_validate extends Fuel_advanced_module {
 		SLOWER TO USE MUTLI FOR SOME REASON
 		*/
 		$ch = curl_init();
+
 		foreach($resources as $link)
 		{
 			$opts = array(
