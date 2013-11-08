@@ -1,7 +1,7 @@
 .ico_tools_validate { background-image: url(../images/ico_html_valid.png); }
 .ico_validate_links { background-image: url(../images/ico_world_link.png); }
 .ico_validate_size { background-image: url(../images/ico_picture_link.png); }
-.ico_refresh { background-image: url(../images/ico_arrow_refresh.png); }
+.ico_refresh { background-image: url(../images/ico_arrow_refresh.png); background-position: 4px 2px; }
 
 div#validation_status { margin-bottom: 10px; height: 32px; line-height: 32px; }
 div#validation_status h2 { margin-bottom: 0px; padding: 0; }
